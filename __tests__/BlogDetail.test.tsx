@@ -9,6 +9,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import userEvent from '@testing-library/user-event'
 import 'setimmediate'
+import { POST } from '../types/Types'
 
 initTestHelpers()
 
@@ -16,46 +17,43 @@ const handlers = [
   rest.get(
     'https://jsonplaceholder.typicode.com/posts/?_limit=10',
     (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json([
-          {
-            userId: 1,
-            id: 1,
-            title: 'dummy title 1',
-            body: 'dummy body 1',
-          },
-          {
-            userId: 2,
-            id: 2,
-            title: 'dummy title 2',
-            body: 'dummy body 2',
-          },
-        ])
-      )
+      const posts: POST[] = [
+        {
+          userId: 1,
+          id: 1,
+          title: 'dummy title 1',
+          body: 'dummy body 1',
+        },
+        {
+          userId: 2,
+          id: 2,
+          title: 'dummy title 2',
+          body: 'dummy body 2',
+        },
+      ]
+
+      return res(ctx.status(200), ctx.json(posts))
     }
   ),
   rest.get('https://jsonplaceholder.typicode.com/posts/1', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        userId: 1,
-        id: 1,
-        title: 'dummy title 1',
-        body: 'dummy body 1',
-      })
-    )
+    const post: POST = {
+      userId: 1,
+      id: 1,
+      title: 'dummy title 1',
+      body: 'dummy body 1',
+    }
+
+    return res(ctx.status(200), ctx.json(post))
   }),
   rest.get('https://jsonplaceholder.typicode.com/posts/2', (req, res, ctx) => {
-    return res(
-      ctx.status(200),
-      ctx.json({
-        userId: 2,
-        id: 2,
-        title: 'dummy title 2',
-        body: 'dummy body 2',
-      })
-    )
+    const post: POST = {
+      userId: 2,
+      id: 2,
+      title: 'dummy title 2',
+      body: 'dummy body 2',
+    }
+
+    return res(ctx.status(200), ctx.json(post))
   }),
 ]
 

@@ -20,6 +20,7 @@ describe('Global state management (useContext)', () => {
 
     expect(screen.getByTestId('toggle-a').textContent).toBe('false')
     expect(screen.getByTestId('toggle-b').textContent).toBe('false')
+
     userEvent.click(screen.getByRole('button'))
     expect(screen.getByTestId('toggle-a').textContent).toBe('true')
     expect(screen.getByTestId('toggle-b').textContent).toBe('true')

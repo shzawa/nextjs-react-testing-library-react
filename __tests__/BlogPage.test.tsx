@@ -8,6 +8,7 @@ import { initTestHelpers } from 'next-page-tester'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import 'setimmediate'
+import { POST } from '../types/Types'
 
 initTestHelpers()
 
@@ -15,23 +16,22 @@ const handlers = [
   rest.get(
     'https://jsonplaceholder.typicode.com/posts/?_limit=10',
     (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json([
-          {
-            userId: 1,
-            id: 1,
-            title: 'dummy title 1',
-            body: 'dummy body 1',
-          },
-          {
-            userId: 2,
-            id: 2,
-            title: 'dummy title 2',
-            body: 'dummy body 2',
-          },
-        ])
-      )
+      const posts: POST[] = [
+        {
+          userId: 1,
+          id: 1,
+          title: 'dummy title 1',
+          body: 'dummy body 1',
+        },
+        {
+          userId: 2,
+          id: 2,
+          title: 'dummy title 2',
+          body: 'dummy body 2',
+        },
+      ]
+
+      return res(ctx.status(200), ctx.json(posts))
     }
   ),
 ]
