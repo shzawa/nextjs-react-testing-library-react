@@ -13,9 +13,11 @@ import { POST } from '../types/Types'
 initTestHelpers()
 
 const handlers = [
-  rest.get(
-    'https://jsonplaceholder.typicode.com/posts/?_limit=10',
-    (req, res, ctx) => {
+  rest.get('https://jsonplaceholder.typicode.com/posts/', (req, res, ctx) => {
+    const query = req.url.searchParams
+    const _limit = query.get('_limit')
+
+    if (_limit === '10') {
       const posts: POST[] = [
         {
           userId: 1,
@@ -33,7 +35,7 @@ const handlers = [
 
       return res(ctx.status(200), ctx.json(posts))
     }
-  ),
+  }),
 ]
 
 const server = setupServer(...handlers)
