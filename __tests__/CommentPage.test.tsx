@@ -14,6 +14,7 @@ const handlers = [
     'https://jsonplaceholder.typicode.com/comments/?_limit=10',
     (req, res, ctx) => {
       return res(
+        ctx.status(200),
         ctx.json([
           {
             postId: 1,
@@ -43,7 +44,7 @@ beforeAll(() => {
 afterEach(() => {
   server.resetHandlers()
   cleanup()
-  cache.clear()
+  // cache.clear()  // resetHandlers()と競合するので一旦off
 })
 afterAll(() => {
   server.close()
