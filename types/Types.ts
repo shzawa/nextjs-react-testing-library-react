@@ -16,6 +16,6 @@ export interface COMMENT {
 export interface TASK {
   userId: number
   id: number
-  titile: string
+  title: string
   completed: boolean
 }
